@@ -80,7 +80,14 @@ class MainActivity : AppCompatActivity() {
                             detailsList.add(details)
                         }
                         binding.progressBar.visibility = View.GONE
-                        adapterDetail.updateData(detailsList)
+                        if (detailsList.size == 0) {
+                            binding.recyclerDetails.visibility = View.GONE
+                            binding.noDataFound.visibility = View.VISIBLE
+                        } else {
+                            binding.noDataFound.visibility = View.GONE
+                            binding.recyclerDetails.visibility = View.VISIBLE
+                            adapterDetail.updateData(detailsList)
+                        }
                     },
                     Response.ErrorListener {
                         Log.d("error aa raha", it.toString());

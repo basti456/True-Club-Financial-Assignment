@@ -3,6 +3,7 @@ package com.ads.one.trueclubfinancialassignment
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,12 +29,14 @@ class MainActivity : AppCompatActivity() {
         binding.tryAgainButton.setOnClickListener {
             callNetworkConnection()
         }
+        //checking internet connection
         callNetworkConnection()
     }
 
     private fun callNetworkConnection() {
         checkNetworkConnection = CheckNetworkConnection(application)
         checkNetworkConnection.observe(this) { isConnected ->
+            //internet is connected
             if (isConnected) {
                 binding.clNoInternet.visibility = View.GONE
                 binding.clInternet.visibility = View.VISIBLE
@@ -52,7 +55,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 adapterDetail = DetailsAdapter(this, detailsList)
                 binding.recyclerDetails.adapter = adapterDetail
-            } else {
+            }
+            //internet not available
+            else {
                 binding.clInternet.visibility = View.GONE
                 binding.clNoInternet.visibility = View.VISIBLE
             }
@@ -61,6 +66,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun sendRequest(name: String) {
+        //making api call
         try {
             val jsonObjectRequest = object :
                 JsonObjectRequest(Request.Method.GET,
@@ -90,13 +96,13 @@ class MainActivity : AppCompatActivity() {
                         }
                     },
                     Response.ErrorListener {
-                        Log.d("error aa raha", it.toString());
+                        Log.d("Error", it.toString());
                     }) {
 
             }
             MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest)
         } catch (_: Exception) {
-
+            Toast.makeText(this, "Some error occurred", Toast.LENGTH_SHORT).show()
         }
     }
 }

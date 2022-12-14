@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ads.one.trueclubfinancialassignment.R
 import com.ads.one.trueclubfinancialassignment.modals.DetailsModal
 
+//adapter class for showing recycler view
 class DetailsAdapter(val context: Context, var detailsList: ArrayList<DetailsModal>) :
     RecyclerView.Adapter<DetailsAdapter.MyViewHolder>() {
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
